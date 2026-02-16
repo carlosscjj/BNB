@@ -25,8 +25,7 @@ export async function GET() {
   if (!session) {
     return NextResponse.json({ error: "Não autenticado" }, { status: 401 });
   export const runtime = "nodejs";
-  }
-
+  import { prisma } from "../../../lib/prisma";
   const rooms = await prisma.room.findMany({
     include: { reservations: true },
   });
