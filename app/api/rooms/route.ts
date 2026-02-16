@@ -3,21 +3,6 @@ import { prisma } from "../../../lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { v2 as cloudinary } from "cloudinary";
-
-console.log("CLOUD_NAME:", process.env.CLOUDINARY_CLOUD_NAME);
-console.log("API_KEY:", process.env.CLOUDINARY_API_KEY);
-console.log("API_SECRET:", process.env.CLOUDINARY_API_SECRET);
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
-
-console.log("ENV TEST:");
-console.log("CLOUD_NAME:", process.env.CLOUDINARY_CLOUD_NAME);
-console.log("API_KEY:", process.env.CLOUDINARY_API_KEY);
-console.log("API_SECRET:", process.env.CLOUDINARY_API_SECRET ? "OK" : "MISSING");
 
 
 
@@ -38,17 +23,21 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Sem permissão" }, { status: 403 });
   }
 
+  const { v2: cloudinary } = await import("cloudinary");
+
+  cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
+    api_key: process.env.CLOUDINARY_API_KEY!,
+    api_secret: process.env.CLOUDINARY_API_SECRET!,
+  });
+
   const formData = await req.formData();
   const name = formData.get("name") as string;
   const description = formData.get("description") as string;
   const photo = formData.get("photo") as File | null;
 
-  if (!name || name.trim() === "") {
-    return NextResponse.json({ error: "O nome é obrigatório." }, { status: 400 });
-  }
-
-
   let photoUrl: string | undefined = undefined;
+
   if (photo && photo instanceof File) {
     const bytes = await photo.arrayBuffer();
     const buffer = Buffer.from(bytes);
