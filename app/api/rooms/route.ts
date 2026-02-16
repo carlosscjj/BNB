@@ -49,10 +49,17 @@ export async function POST(req: NextRequest) {
   const description = formData.get("description") as string;
   const photo = formData.get("photo") as File | null;
 
-  let photoUrl: string | undefined;
+  if (!name || name.trim() === "") {
+    return NextResponse.json({ error: "O nome é obrigatório." }, { status: 400 });
+  }
 
+  let photoUrl: string | undefined = undefined;
   if (photo && photo.size > 0) {
-    photoUrl = await uploadToCloudinary(photo);
+    try {
+      photoUrl = await uploadToCloudinary(photo);
+    } catch (err) {
+      console.log("Erro ao fazer upload para Cloudinary:", err);
+    }
   }
 
   const room = await prisma.room.create({
@@ -77,11 +84,18 @@ export async function PUT(req: NextRequest) {
   const name = formData.get("name") as string;
   const description = formData.get("description") as string;
   const photo = formData.get("photo") as File | null;
-
   let photoUrl: string | undefined = formData.get("photoUrl") as string;
 
+  if (!name || name.trim() === "") {
+    return NextResponse.json({ error: "O nome é obrigatório." }, { status: 400 });
+  }
+
   if (photo && photo.size > 0) {
-    photoUrl = await uploadToCloudinary(photo);
+    try {
+      photoUrl = await uploadToCloudinary(photo);
+    } catch (err) {
+      console.log("Erro ao fazer upload para Cloudinary:", err);
+    }
   }
 
   const room = await prisma.room.update({

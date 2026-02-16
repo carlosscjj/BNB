@@ -9,6 +9,7 @@
         "git commit": true,
         "gh": true,
         "npx ts-node": true,
-        "git push": true
+        "git push": true,
+        "npm update": true
     }
 }
