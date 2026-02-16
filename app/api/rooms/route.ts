@@ -10,22 +10,7 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-async function uploadToCloudinary(file: File) {
-  const buffer = Buffer.from(await file.arrayBuffer());
 
-  return new Promise<string>((resolve, reject) => {
-    cloudinary.uploader.upload_stream(
-      { folder: "rooms" },
-      (error, result) => {
-        if (error || !result) {
-          reject(error);
-        } else {
-          resolve(result.secure_url);
-        }
-      }
-    ).end(buffer);
-  });
-}
 
 export async function GET() {
   const session = await getServerSession(authOptions);
@@ -55,13 +40,24 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "O nome é obrigatório." }, { status: 400 });
   }
 
+
   let photoUrl: string | undefined = undefined;
-  if (photo && photo.size > 0) {
-    try {
-      photoUrl = await uploadToCloudinary(photo);
-    } catch (err) {
-      console.log("Erro ao fazer upload para Cloudinary:", err);
-    }
+  if (photo && photo instanceof File) {
+    const bytes = await photo.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+
+    const uploadResult: any = await new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        { folder: "rooms" },
+        (error, result) => {
+          if (error) reject(error);
+          else resolve(result);
+        }
+      );
+      stream.end(buffer);
+    });
+
+    photoUrl = uploadResult.secure_url;
   }
 
   const room = await prisma.room.create({
