@@ -7,6 +7,7 @@
         "npm install": true,
         "git add": true,
         "git commit": true,
-        "gh": true
+        "gh": true,
+        "npx ts-node": true
     }
 }
