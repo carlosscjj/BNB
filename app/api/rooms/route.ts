@@ -1,3 +1,4 @@
+export const runtime = "nodejs";
 import { prisma } from "../../../lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
@@ -24,12 +25,10 @@ export async function GET() {
   const session = await getServerSession(authOptions);
   if (!session) {
     return NextResponse.json({ error: "Não autenticado" }, { status: 401 });
-  export const runtime = "nodejs";
-  import { prisma } from "../../../lib/prisma";
+  }
   const rooms = await prisma.room.findMany({
     include: { reservations: true },
   });
-
   return NextResponse.json(rooms);
 }
 
