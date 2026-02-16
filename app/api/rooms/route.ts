@@ -24,6 +24,7 @@ export async function GET() {
   const session = await getServerSession(authOptions);
   if (!session) {
     return NextResponse.json({ error: "Não autenticado" }, { status: 401 });
+  export const runtime = "nodejs";
   }
 
   const rooms = await prisma.room.findMany({
