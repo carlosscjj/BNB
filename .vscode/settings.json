@@ -1,0 +1,10 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "npx next": true,
+        "tasklist": true,
+        "npx kill-port": true,
+        "npx prisma": true,
+        "npm install": true,
+        "git add": true
+    }
+}

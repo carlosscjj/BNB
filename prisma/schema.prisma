@@ -1,0 +1,71 @@
+// Prisma schema for Local Accommodation Booking Management
+// Banco: SQLite em dev, PostgreSQL em produção
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         Role
+  comments     Comment[]
+  reservations Reservation[] @relation("UserReservations")
+}
+
+enum Role {
+  ADMIN
+  STAFF
+}
+
+model Room {
+  id          String        @id @default(cuid())
+  name        String
+  description String
+  photoUrl    String? // URL da foto do quarto
+  reservations Reservation[]
+  comments     Comment[]
+}
+
+model Reservation {
+  id         String   @id @default(cuid())
+  room       Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  roomId     String
+  source     Source
+  startDate  DateTime
+  endDate    DateTime
+  guestName  String
+  valorPago  Float?
+  paid       Boolean @default(false)
+  comments   Comment[]
+  user       User?    @relation("UserReservations", fields: [userId], references: [id])
+  userId     String?
+}
+
+enum Source {
+  AIRBNB
+  BOOKING
+}
+
+model SiteSettings {
+  id       String @id @default(cuid())
+  currency String
+}
+model Comment {
+  id            String      @id @default(cuid())
+  text          String
+  createdAt     DateTime    @default(now())
+  user          User        @relation(fields: [userId], references: [id])
+  userId        String
+  room          Room?       @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  roomId        String?
+  reservation   Reservation?@relation(fields: [reservationId], references: [id], onDelete: Cascade)
+  reservationId String?
+}

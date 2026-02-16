@@ -1,4 +1,58 @@
+/* FullCalendar dark mode overrides */
+.dark .fc {
+  background-color: #1f2937;
+  color: white;
+}
+
+.dark .fc-theme-standard td,
+.dark .fc-theme-standard th {
+  border-color: #374151;
+}
+
+.dark .fc-scrollgrid {
+  background-color: #1f2937;
+}
+
+.dark .fc-daygrid-day {
+  background-color: #1f2937;
+}
+
+.dark .fc-toolbar-title {
+  color: white;
+}
+
+.dark .fc-button {
+  background-color: #374151;
+  border: none;
+}
+
+.dark .fc-button:hover {
+  background-color: #4b5563;
+}
+input, textarea {
+  @apply text-black placeholder:text-gray-400;
+}
+
 @import "tailwindcss";
+
+/* FullCalendar dark mode overrides */
+.dark .fc {
+  background-color: #1f2937;
+  color: #f3f4f6;
+}
+.dark .fc-theme-standard td,
+.dark .fc-theme-standard th {
+  border-color: #374151;
+}
+.dark .fc-daygrid-day {
+  background-color: #1f2937;
+}
+.dark .fc-daygrid-day-number {
+  color: #f3f4f6;
+}
+.dark .fc-toolbar-title {
+  color: #f3f4f6;
+}
 
 :root {
   --background: #ffffff;
@@ -20,7 +74,53 @@
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply bg-white text-black dark:bg-gray-900 dark:text-gray-100;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+input, select, textarea {
+  outline: none;
+  transition: border 0.2s;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: #f97316;
+  box-shadow: 0 0 0 1.5px #f9731633;
+}
+
+button, .btn {
+  transition: background 0.2s, color 0.2s;
+}
+
+
+.bg-orange-500 {
+  background-color: #f97316 !important;
+}
+.hover\:bg-orange-600:hover {
+  background-color: #ea580c !important;
+}
+.text-orange-500 {
+  color: #f97316 !important;
+}
+.hover\:text-orange-500:hover {
+  color: #f97316 !important;
+}
+
+.dark\:bg-gray-900 {
+  background-color: #111827 !important;
+}
+.dark\:bg-gray-800 {
+  background-color: #1f2937 !important;
+}
+.dark\:text-gray-100 {
+  color: #f3f4f6 !important;
+}
+.dark\:text-white {
+  color: #fff !important;
+}
+
+.rounded {
+  border-radius: 0.5rem !important;
+}
+.shadow {
+  box-shadow: 0 2px 8px 0 #0001 !important;
 }
