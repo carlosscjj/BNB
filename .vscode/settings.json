@@ -8,6 +8,7 @@
         "git add": true,
         "git commit": true,
         "gh": true,
-        "npx ts-node": true
+        "npx ts-node": true,
+        "git push": true
     }
 }
