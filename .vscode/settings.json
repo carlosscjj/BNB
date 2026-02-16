@@ -5,6 +5,8 @@
         "npx kill-port": true,
         "npx prisma": true,
         "npm install": true,
-        "git add": true
+        "git add": true,
+        "git commit": true,
+        "gh": true
     }
 }
