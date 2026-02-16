@@ -23,8 +23,13 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Sem permissão" }, { status: 403 });
   }
 
-  const { v2: cloudinary } = await import("cloudinary");
 
+  console.log("ENV DEBUG:");
+  console.log("CLOUD_NAME:", process.env.CLOUDINARY_CLOUD_NAME);
+  console.log("API_KEY:", process.env.CLOUDINARY_API_KEY);
+  console.log("API_SECRET:", process.env.CLOUDINARY_API_SECRET ? "EXISTS" : "MISSING");
+
+  const { v2: cloudinary } = await import("cloudinary");
   cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
     api_key: process.env.CLOUDINARY_API_KEY!,
