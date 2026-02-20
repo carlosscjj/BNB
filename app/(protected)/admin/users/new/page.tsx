@@ -34,9 +34,9 @@ export default function NewUserPage() {
   }
 
   return (
-    <div className="max-w-xl mx-auto p-6">
+    <div className="max-w-xl mx-auto p-6 bg-white text-black rounded shadow">
       <h1 className="text-2xl font-bold mb-4">Criar Novo Utilizador</h1>
-      <form onSubmit={handleSubmit} className="space-y-4 bg-white dark:bg-gray-800 p-6 rounded shadow">
+      <form onSubmit={handleSubmit} className="space-y-4 bg-white text-black p-6 rounded shadow">
         <div>
           <label className="block font-semibold mb-1">Nome</label>
           <input
