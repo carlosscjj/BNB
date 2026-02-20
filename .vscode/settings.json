@@ -11,5 +11,6 @@
         "npx ts-node": true,
         "git push": true,
         "npm update": true
-    }
+    },
+    "editor.accessibilityPageSize": 1500
 }
