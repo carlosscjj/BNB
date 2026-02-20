@@ -79,15 +79,15 @@ export default function RoomDetailPage() {
   return (
     <main className="p-8">
       <div className="flex items-center justify-between mb-4">
-        <h1 className="text-2xl font-bold text-black dark:text-gray-100">{room.name}</h1>
+        <h1 className="text-2xl font-bold text-black">{room.name}</h1>
         <Link href={`/rooms/${room.id}/edit`} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 font-bold">Editar</Link>
       </div>
       {room.photoUrl && (
         <img src={room.photoUrl} alt={room.name} className="mb-4 rounded shadow max-w-xs" />
       )}
-      <p className="mb-4 text-black dark:text-gray-100">{room.description}</p>
+      <p className="mb-4 text-black">{room.description}</p>
       <section className="mb-8">
-        <h2 className="font-semibold mb-2 text-black dark:text-gray-100">Calendário Geral</h2>
+        <h2 className="font-semibold mb-2 text-black">Calendário Geral</h2>
         <RoomCalendar
           reservations={room.reservations}
           userRole={isAdmin ? "ADMIN" : undefined}
@@ -95,7 +95,7 @@ export default function RoomDetailPage() {
         />
       </section>
       <section>
-        <h2 className="font-semibold mb-2 text-black dark:text-gray-100">Comentários Internos</h2>
+        <h2 className="font-semibold mb-2 text-black">Comentários Internos</h2>
         <CommentsSection roomId={room.id} comments={room.comments} />
       </section>
     </main>

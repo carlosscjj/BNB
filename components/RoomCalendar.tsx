@@ -74,7 +74,7 @@ export default function RoomCalendar({ reservations, showRoomNames = false, user
   return (
     <div className="bg-white rounded shadow p-4">
       <div className="mb-4 flex gap-2 items-center">
-        <label className="font-semibold text-black dark:text-gray-200">Filtrar por quarto:</label>
+        <label className="font-semibold text-black">Filtrar por quarto:</label>
         <select
           className="border p-2 rounded text-black dark:text-black"
           value={selectedRoom}
