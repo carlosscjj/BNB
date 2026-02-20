@@ -87,7 +87,7 @@ export default function RoomDetailPage() {
       )}
       <p className="mb-4 text-black dark:text-gray-100">{room.description}</p>
       <section className="mb-8">
-        <h2 className="font-semibold mb-2 text-black dark:text-gray-100">Calendário de Reservas</h2>
+        <h2 className="font-semibold mb-2 text-black dark:text-gray-100">Calendário Geral</h2>
         <RoomCalendar
           reservations={room.reservations}
           userRole={isAdmin ? "ADMIN" : undefined}

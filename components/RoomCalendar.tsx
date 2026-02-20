@@ -74,9 +74,9 @@ export default function RoomCalendar({ reservations, showRoomNames = false, user
   return (
     <div className="bg-white rounded shadow p-4">
       <div className="mb-4 flex gap-2 items-center">
-        <label className="font-semibold">Filtrar por quarto:</label>
+        <label className="font-semibold text-black dark:text-gray-200">Filtrar por quarto:</label>
         <select
-          className="border p-2 rounded"
+          className="border p-2 rounded text-black dark:text-black"
           value={selectedRoom}
           onChange={e => setSelectedRoom(e.target.value)}
         >
@@ -85,23 +85,6 @@ export default function RoomCalendar({ reservations, showRoomNames = false, user
             <option key={name} value={name}>{name}</option>
           ))}
         </select>
-
-        <ul className="space-y-1">
-          {filteredReservations.map(res => (
-            <li key={res.id} className="flex items-center gap-2 text-sm">
-              <span>{showRoomNames && res.roomName ? `${res.roomName} - ` : ""}{res.guestName} ({res.source}) {new Date(res.startDate).toLocaleDateString()} a {new Date(res.endDate).toLocaleDateString()}</span>
-              <span className={res.paid ? "text-green-600 font-bold" : "text-red-600 font-bold"}>{res.paid ? "Pago" : "Pendente"}</span>
-              {(userRole === "ADMIN" || userRole === "STAFF") && onTogglePaid && (
-                <button
-                  className={`ml-2 px-2 py-1 rounded font-semibold ${res.paid ? "bg-orange-100 text-orange-700 hover:bg-orange-200" : "bg-orange-100 text-orange-700 hover:bg-orange-200"}`}
-                  onClick={() => onTogglePaid(res.id, !res.paid)}
-                >
-                  {res.paid ? "Marcar como Pendente" : "Marcar como Pago"}
-                </button>
-              )}
-            </li>
-          ))}
-        </ul>
       </div>
 
       {/* FullCalendar Component */}
@@ -118,6 +101,28 @@ export default function RoomCalendar({ reservations, showRoomNames = false, user
         locale={currentLanguage === 'pt' ? ptLocale : enLocale}
         height="auto"
       />
+
+      {/* Lista de Reservas - Agora em baixo */}
+      <div className="mt-6">
+        <h3 className="font-semibold mb-3 text-black dark:text-gray-100">Estado das Reservas</h3>
+        <ul className="space-y-2">
+          {filteredReservations.map(res => (
+            <li key={res.id} className="flex items-center justify-between gap-2 text-sm bg-gray-50 dark:bg-gray-800 p-3 rounded">
+              <span className="text-black dark:text-gray-100">{showRoomNames && res.roomName ? `${res.roomName} - ` : ""}{res.guestName} ({res.source})</span>
+              <span className="text-gray-600 dark:text-gray-400 text-xs">{new Date(res.startDate).toLocaleDateString()} a {new Date(res.endDate).toLocaleDateString()}</span>
+              <span className={res.paid ? "text-green-600 font-bold" : "text-red-600 font-bold"}>{res.paid ? "✓ Pago" : "✗ Pendente"}</span>
+              {(userRole === "ADMIN" || userRole === "STAFF") && onTogglePaid && (
+                <button
+                  className={`ml-2 px-2 py-1 rounded font-semibold text-xs ${res.paid ? "bg-orange-100 text-orange-700 hover:bg-orange-200" : "bg-orange-100 text-orange-700 hover:bg-orange-200"}`}
+                  onClick={() => onTogglePaid(res.id, !res.paid)}
+                >
+                  {res.paid ? "Pendente" : "Pago"}
+                </button>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
