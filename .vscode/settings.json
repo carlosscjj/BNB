@@ -10,7 +10,8 @@
         "gh": true,
         "npx ts-node": true,
         "git push": true,
-        "npm update": true
+        "npm update": true,
+        "git rm": true
     },
     "editor.accessibilityPageSize": 1500
 }

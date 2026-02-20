@@ -53,14 +53,6 @@ export default function RoomsPage() {
     }
   }
 
-  // DEBUG: Visualizar variáveis de ambiente do Cloudinary
-  const [cloudinaryEnv, setCloudinaryEnv] = useState<any>(null);
-  useEffect(() => {
-    fetch("/api/cloudinary-env")
-      .then(res => res.ok ? res.json() : null)
-      .then(data => setCloudinaryEnv(data));
-  }, []);
-
   return (
     <main className="p-8">
       <div className="flex items-center justify-between mb-4">
@@ -69,16 +61,6 @@ export default function RoomsPage() {
           <Link href="/rooms/new" className="bg-orange-500 text-white text-lg font-bold px-6 py-3 rounded hover:bg-orange-600 transition">Novo Quarto</Link>
         )}
       </div>
-      {/* ENV DEBUG */}
-      {cloudinaryEnv && (
-        <div className="bg-gray-100 border border-gray-300 rounded p-4 mb-4 text-black">
-          <strong>ENV DEBUG:</strong><br />
-          CLOUD_NAME: {cloudinaryEnv.CLOUDINARY_CLOUD_NAME || "duycpzep8"}<br />
-          API_KEY: {cloudinaryEnv.CLOUDINARY_API_KEY || ""}<br />
-          API_SECRET: {cloudinaryEnv.CLOUDINARY_API_SECRET || ""}<br />
-          CLOUDINARY_URL: {cloudinaryEnv.CLOUDINARY_URL || "cloudinary://:@duycpzep8"}
-        </div>
-      )}
       {deleteError && <div className="text-red-600 font-semibold text-center mb-2">{deleteError}</div>}
       {loading ? (
         <div className="text-center text-black py-8">Carregando...</div>
