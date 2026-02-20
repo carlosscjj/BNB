@@ -5,11 +5,22 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 function getCloudinaryConfig() {
-  // Prefer variáveis separadas, mas aceita CLOUDINARY_URL se presente
-  const cloudName = process.env.CLOUDINARY_CLOUD_NAME || process.env.CLOUDINARY_URL?.split('@')[1];
-  const apiKey = process.env.CLOUDINARY_API_KEY || process.env.CLOUDINARY_URL?.split('://')[1]?.split(':')[0];
-  const apiSecret = process.env.CLOUDINARY_API_SECRET || process.env.CLOUDINARY_URL?.split(':')[2]?.split('@')[0];
-  return { cloud_name: cloudName, api_key: apiKey, api_secret: apiSecret };
+  // Log cada variável individualmente para debug
+  const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
+  const apiKey = process.env.CLOUDINARY_API_KEY;
+  const apiSecret = process.env.CLOUDINARY_API_SECRET;
+  
+  // Debug logs
+  console.log("getCloudinaryConfig() - Valores brutos:");
+  console.log("  CLOUDINARY_CLOUD_NAME =", cloudName ? `"${cloudName}"` : "undefined");
+  console.log("  CLOUDINARY_API_KEY =", apiKey ? `"${apiKey.substring(0, 5)}..."` : "undefined");
+  console.log("  CLOUDINARY_API_SECRET =", apiSecret ? `"${apiSecret.substring(0, 5)}..."` : "undefined");
+  
+  return { 
+    cloud_name: cloudName, 
+    api_key: apiKey, 
+    api_secret: apiSecret 
+  };
 }
 
 
@@ -31,18 +42,30 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Sem permissão" }, { status: 403 });
   }
 
+  console.log("=== POST /api/rooms - Iniciando ===");
+  const config = getCloudinaryConfig();
+  
+  console.log("Cloudinary Config Status:");
+  console.log("  cloud_name:", config.cloud_name ? "✓ CONFIGURADO" : "✗ FALTANDO");
+  console.log("  api_key:", config.api_key ? "✓ CONFIGURADO" : "✗ FALTANDO");
+  console.log("  api_secret:", config.api_secret ? "✓ CONFIGURADO" : "✗ FALTANDO");
 
-  console.log("ENV DEBUG:");
-  console.log("CLOUD_NAME:", process.env.CLOUDINARY_CLOUD_NAME);
-  console.log("API_KEY:", process.env.CLOUDINARY_API_KEY);
-  console.log("API_SECRET:", process.env.CLOUDINARY_API_SECRET ? "EXISTS" : "MISSING");
+  if (!config.cloud_name || !config.api_key || !config.api_secret) {
+    console.error("✗ Cloudinary não está configurado corretamente!");
+    return NextResponse.json({ 
+      error: "Cloudinary configuration incomplete",
+      missing: {
+        cloud_name: !config.cloud_name,
+        api_key: !config.api_key,
+        api_secret: !config.api_secret
+      },
+      instructions: "Configure CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, e CLOUDINARY_API_SECRET no Vercel (Settings > Environment Variables > Production)"
+    }, { status: 500 });
+  }
 
   const { v2: cloudinary } = await import("cloudinary");
-  const config = getCloudinaryConfig();
-  if (!config.cloud_name || !config.api_key || !config.api_secret) {
-    return NextResponse.json({ error: "Cloudinary não está configurado corretamente. Verifique as variáveis de ambiente." }, { status: 500 });
-  }
   cloudinary.config(config);
+  console.log("✓ Cloudinary configurado com sucesso");
 
   const formData = await req.formData();
   const name = formData.get("name") as string;

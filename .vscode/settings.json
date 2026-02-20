@@ -11,7 +11,15 @@
         "npx ts-node": true,
         "git push": true,
         "npm update": true,
-        "git rm": true
+        "git rm": true,
+        "/^node verify-cloudinary\\.js$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^node -r dotenv/config verify-cloudinary\\.js$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
     },
     "editor.accessibilityPageSize": 1500
 }
