@@ -103,6 +103,21 @@ export default function RoomCalendar({ reservations, showRoomNames = false, user
           ))}
         </ul>
       </div>
+
+      {/* FullCalendar Component */}
+      <FullCalendar
+        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+        headerToolbar={{
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        }}
+        initialView="dayGridMonth"
+        events={events}
+        eventClick={handleEventClick}
+        locale={currentLanguage === 'pt' ? ptLocale : enLocale}
+        height="auto"
+      />
     </div>
   );
 }
