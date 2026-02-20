@@ -68,14 +68,14 @@ export default function ReservationDetailPage() {
   return (
     <main className="p-8 max-w-lg mx-auto">
       <h1 className="text-2xl font-bold mb-4 text-black">Detalhes da Reserva</h1>
-      <div className="bg-white dark:bg-white rounded shadow p-6 mb-4">
-        <div className="mb-2"><b>Quarto:</b> {reservation.room?.name}</div>
-        <div className="mb-2"><b>Hóspede:</b> {reservation.guestName}</div>
-        <div className="mb-2"><b>Valor Pago:</b> € {reservation.valorPago?.toFixed(2) ?? '-'}</div>
-        <div className="mb-2"><b>Data Entrada:</b> {new Date(reservation.startDate).toLocaleString()}</div>
-        <div className="mb-2"><b>Data Saída:</b> {new Date(reservation.endDate).toLocaleString()}</div>
-        <div className="mb-2"><b>Fonte:</b> {reservation.source}</div>
-        <div className="mb-2"><b>Responsável:</b> {reservation.user?.name ?? '-'}</div>
+      <div className="bg-white rounded shadow p-6 mb-4">
+        <div className="mb-2 text-black"><b>Quarto:</b> {reservation.room?.name}</div>
+        <div className="mb-2 text-black"><b>Hóspede:</b> {reservation.guestName}</div>
+        <div className="mb-2 text-black"><b>Valor Pago:</b> € {reservation.valorPago?.toFixed(2) ?? '-'}</div>
+        <div className="mb-2 text-black"><b>Data Entrada:</b> {new Date(reservation.startDate).toLocaleString()}</div>
+        <div className="mb-2 text-black"><b>Data Saída:</b> {new Date(reservation.endDate).toLocaleString()}</div>
+        <div className="mb-2 text-black"><b>Fonte:</b> {reservation.source}</div>
+        <div className="mb-2 text-black"><b>Responsável:</b> {reservation.user?.name ?? '-'}</div>
         <div className="mb-2 flex items-center gap-2">
           <b>Status de Pagamento:</b>
           <span className={reservation.paid ? "text-green-600 font-bold" : "text-red-600 font-bold"}>
@@ -93,7 +93,7 @@ export default function ReservationDetailPage() {
         </div>
         {toggleError && <div className="text-red-600 mt-2">{toggleError}</div>}
       </div>
-      <div className="bg-white dark:bg-white rounded shadow p-6">
+      <div className="bg-white rounded shadow p-6">
         <h2 className="font-semibold mb-2 text-black">Comentários da Reserva</h2>
         <CommentsSection reservationId={reservation.id} comments={reservation.comments} />
       </div>

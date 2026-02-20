@@ -104,12 +104,12 @@ export default function RoomCalendar({ reservations, showRoomNames = false, user
 
       {/* Lista de Reservas - Agora em baixo */}
       <div className="mt-6">
-        <h3 className="font-semibold mb-3 text-black dark:text-gray-100">Estado das Reservas</h3>
+        <h3 className="font-semibold mb-3 text-black">Estado das Reservas</h3>
         <ul className="space-y-2">
           {filteredReservations.map(res => (
-            <li key={res.id} className="flex items-center justify-between gap-2 text-sm bg-gray-50 dark:bg-gray-800 p-3 rounded">
-              <span className="text-black dark:text-gray-100">{showRoomNames && res.roomName ? `${res.roomName} - ` : ""}{res.guestName} ({res.source})</span>
-              <span className="text-gray-600 dark:text-gray-400 text-xs">{new Date(res.startDate).toLocaleDateString()} a {new Date(res.endDate).toLocaleDateString()}</span>
+            <li key={res.id} className="flex items-center justify-between gap-2 text-sm bg-white border border-gray-200 p-3 rounded">
+              <span className="text-black">{showRoomNames && res.roomName ? `${res.roomName} - ` : ""}{res.guestName} ({res.source})</span>
+              <span className="text-black text-xs">{new Date(res.startDate).toLocaleDateString()} a {new Date(res.endDate).toLocaleDateString()}</span>
               <span className={res.paid ? "text-green-600 font-bold" : "text-red-600 font-bold"}>{res.paid ? "✓ Pago" : "✗ Pendente"}</span>
               {(userRole === "ADMIN" || userRole === "STAFF") && onTogglePaid && (
                 <button
