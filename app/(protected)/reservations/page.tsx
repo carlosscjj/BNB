@@ -50,8 +50,8 @@ export default function ReservationsPage() {
 
   return (
     <div className="max-w-6xl mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-4 text-black dark:text-gray-100">Reservas</h1>
-      <table className="w-full border-collapse bg-white dark:bg-white text-black">
+      <h1 className="text-2xl font-bold mb-4 text-black">Reservas</h1>
+      <table className="w-full border-collapse bg-white text-black">
         <thead className="bg-gray-100 dark:bg-gray-200 text-black">
           <tr>
             <th className="border p-2 text-left">Hóspede</th>
