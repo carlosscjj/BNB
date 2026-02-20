@@ -4,6 +4,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
+function getCloudinaryConfig() {
+  // Prefer variáveis separadas, mas aceita CLOUDINARY_URL se presente
+  const cloudName = process.env.CLOUDINARY_CLOUD_NAME || process.env.CLOUDINARY_URL?.split('@')[1];
+  const apiKey = process.env.CLOUDINARY_API_KEY || process.env.CLOUDINARY_URL?.split('://')[1]?.split(':')[0];
+  const apiSecret = process.env.CLOUDINARY_API_SECRET || process.env.CLOUDINARY_URL?.split(':')[2]?.split('@')[0];
+  return { cloud_name: cloudName, api_key: apiKey, api_secret: apiSecret };
+}
+
 
 
 export async function GET() {
@@ -30,11 +38,11 @@ export async function POST(req: NextRequest) {
   console.log("API_SECRET:", process.env.CLOUDINARY_API_SECRET ? "EXISTS" : "MISSING");
 
   const { v2: cloudinary } = await import("cloudinary");
-  cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
-    api_key: process.env.CLOUDINARY_API_KEY!,
-    api_secret: process.env.CLOUDINARY_API_SECRET!,
-  });
+  const config = getCloudinaryConfig();
+  if (!config.cloud_name || !config.api_key || !config.api_secret) {
+    return NextResponse.json({ error: "Cloudinary não está configurado corretamente. Verifique as variáveis de ambiente." }, { status: 500 });
+  }
+  cloudinary.config(config);
 
   const formData = await req.formData();
   const name = formData.get("name") as string;
