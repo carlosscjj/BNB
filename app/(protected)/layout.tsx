@@ -18,8 +18,8 @@ export default function ProtectedLayout({
   if (!session) return null;
 
   return (
-    <div className="flex min-h-screen bg-white text-black">
-      <aside className="w-64 bg-orange-500 text-white p-6 space-y-4">
+    <div className="flex flex-col md:flex-row min-h-screen bg-white text-black">
+      <aside className="w-full md:w-64 bg-orange-500 text-white p-4 md:p-6 space-y-4">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl font-bold">{t("dashboard")}</h2>
         </div>

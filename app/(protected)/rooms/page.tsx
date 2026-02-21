@@ -67,15 +67,15 @@ export default function RoomsPage() {
       ) : rooms.length === 0 ? (
         <div className="text-center text-black py-8">Nenhum quarto encontrado.</div>
       ) : (
-        <ul className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <ul className="grid gap-4 md:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {rooms.map((room) => (
-            <li key={room.id} className="bg-white dark:bg-white rounded shadow p-6 flex flex-col hover:shadow-lg transition-colors">
+            <li key={room.id} className="bg-white dark:bg-white rounded shadow p-4 md:p-6 flex flex-col hover:shadow-lg transition-colors">
               {room.photoUrl && (
-                <img src={room.photoUrl} alt={room.name} className="mb-3 rounded shadow max-h-40 object-cover" />
+                <img src={room.photoUrl} alt={room.name} className="mb-3 rounded shadow max-h-40 object-cover w-full" />
               )}
-              <span className="font-semibold text-lg text-black mb-1">{room.name}</span>
+              <span className="font-semibold text-base md:text-lg text-black mb-1">{room.name}</span>
               <span className="text-black mb-3">{room.description}</span>
-              <div className="flex gap-2 mt-auto">
+              <div className="flex flex-col sm:flex-row gap-2 mt-auto">
                 <Link href={`/rooms/${room.id}`} className="text-orange-500 hover:underline font-medium">Ver detalhes</Link>
                 {isAdmin && (
                   <>

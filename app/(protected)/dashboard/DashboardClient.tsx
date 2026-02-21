@@ -27,26 +27,26 @@ export default function DashboardClient({
 }: DashboardClientProps) {
   const { t } = require("@/components/LanguageContext").useLanguage();
   return (
-    <div className="p-8 space-y-8 bg-white text-black min-h-screen">
-      <h1 className="text-3xl font-bold text-orange-500">
+    <div className="p-4 md:p-8 space-y-8 bg-white text-black min-h-screen">
+      <h1 className="text-2xl md:text-3xl font-bold text-orange-500">
         {t("dashboard")}
       </h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
         <Card title={t("rooms") + " " + t("total")} value={totalRooms} />
         <Card title={t("reservation") + " " + t("total")} value={totalReservations} />
         <Card title={t("activeReservations")} value={activeReservations} />
         <Card title={t("occupancy")} value={`${ocupacaoPercent}%`} />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
         <Card title={t("monthEarnings")} value={receitaMes} />
         <Card title={t("yearEarnings")} value={receitaAno} />
         <Card title={t("unpaid") + " " + t("total")} value={totalPendente} />
       </div>
 
-      <div className="bg-white rounded shadow p-6">
-        <h2 className="text-xl font-bold mb-4 text-orange-500">
+      <div className="bg-white rounded shadow p-4 md:p-6">
+        <h2 className="text-lg md:text-xl font-bold mb-4 text-orange-500">
           {t("platformDistribution")}
         </h2>
         <div className="space-y-2">
