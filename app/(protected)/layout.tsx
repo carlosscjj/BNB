@@ -42,7 +42,7 @@ export default function ProtectedLayout({
           </>
         )}
         <Link href="/reservations" passHref>
-          <button className="w-full bg-white text-orange-500 font-bold py-2 rounded mb-2 hover:bg-orange-100 transition">{t("addReservation")}</button>
+          <button className="w-full bg-white text-orange-500 font-bold py-2 rounded mb-2 hover:bg-orange-100 transition">{t("reservation")}</button>
         </Link>
         <Link href="/calendar" passHref>
           <button className="w-full bg-white text-orange-500 font-bold py-2 rounded mb-2 hover:bg-orange-100 transition">Agenda</button>

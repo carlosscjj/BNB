@@ -1,19 +1,21 @@
 export const translations = {
   pt: {
     rooms: "Quartos",
-    addReservation: "Adicionar Reserva",
+    reservation: "Reserva",
     paid: "Pago",
     unpaid: "Por cobrar",
-    dashboard: "Painel",
+    dashboard: "Dashboard Administrativo",
+    monthEarnings: "Ganhos por mês",
     users: "Utilizadores",
     comments: "Comentários Internos",
   },
   en: {
     rooms: "Rooms",
-    addReservation: "Add Reservation",
+    reservation: "Reservation",
     paid: "Paid",
     unpaid: "Unpaid",
-    dashboard: "Dashboard",
+    dashboard: "Administrative Dashboard",
+    monthEarnings: "Earnings per month",
     users: "Users",
     comments: "Internal Comments",
   }

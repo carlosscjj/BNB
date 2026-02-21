@@ -25,28 +25,29 @@ export default function DashboardClient({
   totalPendente,
   reservasPorSource,
 }: DashboardClientProps) {
+  const { t } = require("@/components/LanguageContext").useLanguage();
   return (
     <div className="p-8 space-y-8 bg-white text-black min-h-screen">
       <h1 className="text-3xl font-bold text-orange-500">
-        Dashboard Administrativo
+        {t("dashboard")}
       </h1>
 
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        <Card title="Total Quartos" value={totalRooms} />
-        <Card title="Total Reservas" value={totalReservations} />
-        <Card title="Reservas Ativas" value={activeReservations} />
-        <Card title="Ocupação %" value={`${ocupacaoPercent}%`} />
+        <Card title={t("rooms") + " " + t("total")} value={totalRooms} />
+        <Card title={t("reservation") + " " + t("total")} value={totalReservations} />
+        <Card title={t("activeReservations")} value={activeReservations} />
+        <Card title={t("occupancy")} value={`${ocupacaoPercent}%`} />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card title="Receita Mês" value={receitaMes} />
-        <Card title="Receita Ano" value={receitaAno} />
-        <Card title="Total Pendente" value={totalPendente} />
+        <Card title={t("monthEarnings")} value={receitaMes} />
+        <Card title={t("yearEarnings")} value={receitaAno} />
+        <Card title={t("unpaid") + " " + t("total")} value={totalPendente} />
       </div>
 
       <div className="bg-white rounded shadow p-6">
         <h2 className="text-xl font-bold mb-4 text-orange-500">
-          Distribuição por Plataforma
+          {t("platformDistribution")}
         </h2>
         <div className="space-y-2">
           {reservasPorSource.map((item: { source: string; _count: { _all: number } }) => (
