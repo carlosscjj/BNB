@@ -1,3 +1,4 @@
+"use client";
 import { useLanguage } from "./LanguageContext";
 import React from "react";
 
@@ -9,17 +10,5 @@ export default function LanguageWrapper({ children }: { children: React.ReactNod
         {children}
       </body>
     </html>
-  );
-}
-"use client";
-import { LanguageProvider } from "./LanguageContext";
-import LanguageSwitcher from "./LanguageSwitcher";
-
-export default function LanguageWrapper({ children }: { children: React.ReactNode }) {
-  return (
-    <LanguageProvider>
-      <LanguageSwitcher />
-      {children}
-    </LanguageProvider>
   );
 }
