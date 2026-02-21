@@ -13,13 +13,13 @@ export default function LoginPage() {
     event.preventDefault();
     setError("");
     const form = event.currentTarget;
-    const email = form.email.value;
+    const identifier = form.identifier.value;
     const password = form.password.value;
-    if (!email || !password) {
+    if (!identifier || !password) {
       setError("Preencha todos os campos.");
       return;
     }
-    const res = await signIn("credentials", { email, password, redirect: false });
+    const res = await signIn("credentials", { identifier, password, redirect: false });
     if (res?.ok && !res.error) {
       // Atualizar sessão imediatamente para refletir permissões
       await router.refresh?.();
@@ -39,9 +39,9 @@ export default function LoginPage() {
       <form onSubmit={handleLogin} className="bg-white p-8 rounded shadow w-80 flex flex-col gap-4 transition-colors">
         <h1 className="text-xl font-bold text-center text-orange-500">Gestão de Reservas</h1>
         <input
-          name="email"
-          type="email"
-          placeholder="Email"
+          name="identifier"
+          type="text"
+          placeholder="Email ou Username"
           required
           className="border p-2 rounded text-black placeholder-gray-500 bg-white focus:outline-none focus:ring-2 focus:ring-orange-400"
           style={{ color: '#111', background: '#fff', fontWeight: 500 }}
