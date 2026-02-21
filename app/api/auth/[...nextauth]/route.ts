@@ -12,12 +12,20 @@ export const authOptions = {
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        email: { label: "Email", type: "email", placeholder: "email@local.com" },
+        identifier: { label: "Email ou Username", type: "text", placeholder: "email@local.com ou username" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) return null;
-        const user = await prisma.user.findUnique({ where: { email: credentials.email } });
+        if (!credentials?.identifier || !credentials?.password) return null;
+        const identifier = credentials.identifier.trim().toLowerCase();
+        const user = await prisma.user.findFirst({
+          where: {
+            OR: [
+              { email: { equals: identifier, mode: "insensitive" } },
+              { name: { equals: identifier, mode: "insensitive" } }
+            ]
+          }
+        });
         if (!user) return null;
         const valid = await bcrypt.compare(credentials.password, user.passwordHash);
         if (!valid) return null;
