@@ -24,11 +24,11 @@ export default async function RootLayout({
 }) {
   const session = await getServerSession(authOptions);
   return (
-    <html lang="pt">
-      <body className="bg-white text-black antialiased">
-        <Providers session={session}>{children}</Providers>
-      </body>
-    </html>
+    <Providers session={session}>
+      <LanguageWrapper>
+        {children}
+      </LanguageWrapper>
+    </Providers>
   );
 }
 
