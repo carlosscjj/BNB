@@ -7,6 +7,8 @@ import LanguageWrapper from "../components/LanguageWrapper";
 import { Geist, Geist_Mono } from "next/font/google";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,6 +30,8 @@ export default async function RootLayout({
     <Providers session={session}>
       <LanguageWrapper>
         {children}
+        <SpeedInsights />
+        <Analytics />
       </LanguageWrapper>
     </Providers>
   );
