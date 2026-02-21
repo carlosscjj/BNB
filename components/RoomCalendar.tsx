@@ -40,7 +40,7 @@ const sourceColors: Record<string, string> = {
 
 
 export default function RoomCalendar({ reservations, showRoomNames = false, userRole, onTogglePaid }: RoomCalendarProps & { userRole?: string }) {
-  const { language: currentLanguage } = useLanguage();
+  const { language: currentLanguage, t } = useLanguage();
   const router = useRouter();
   const [selectedRoom, setSelectedRoom] = useState<string>("");
 
@@ -74,13 +74,13 @@ export default function RoomCalendar({ reservations, showRoomNames = false, user
   return (
     <div className="bg-white rounded shadow p-4">
       <div className="mb-4 flex gap-2 items-center">
-        <label className="font-semibold text-black">Filtrar por quarto:</label>
+        <label className="font-semibold text-black">{t("filterByRoom")}</label>
         <select
           className="border p-2 rounded text-black dark:text-black"
           value={selectedRoom}
           onChange={e => setSelectedRoom(e.target.value)}
         >
-          <option value="">Todos</option>
+          <option value="">{t("allRooms")}</option>
           {roomNames.map(name => (
             <option key={name} value={name}>{name}</option>
           ))}
@@ -104,19 +104,19 @@ export default function RoomCalendar({ reservations, showRoomNames = false, user
 
       {/* Lista de Reservas - Agora em baixo */}
       <div className="mt-6">
-        <h3 className="font-semibold mb-3 text-black">Estado das Reservas</h3>
+        <h3 className="font-semibold mb-3 text-black">{t("reservationStatus")}</h3>
         <ul className="space-y-2">
           {filteredReservations.map(res => (
             <li key={res.id} className="flex items-center justify-between gap-2 text-sm bg-white border border-gray-200 p-3 rounded">
               <span className="text-black">{showRoomNames && res.roomName ? `${res.roomName} - ` : ""}{res.guestName} ({res.source})</span>
-              <span className="text-black text-xs">{new Date(res.startDate).toLocaleDateString()} a {new Date(res.endDate).toLocaleDateString()}</span>
-              <span className={res.paid ? "text-green-600 font-bold" : "text-red-600 font-bold"}>{res.paid ? "✓ Pago" : "✗ Pendente"}</span>
+              <span className="text-black text-xs">{new Date(res.startDate).toLocaleDateString()} {t("to") } {new Date(res.endDate).toLocaleDateString()}</span>
+              <span className={res.paid ? "text-green-600 font-bold" : "text-red-600 font-bold"}>{res.paid ? `✓ ${t("paid")}` : `✗ ${t("unpaid")}`}</span>
               {(userRole === "ADMIN" || userRole === "STAFF") && onTogglePaid && (
                 <button
                   className={`ml-2 px-2 py-1 rounded font-semibold text-xs ${res.paid ? "bg-orange-100 text-orange-700 hover:bg-orange-200" : "bg-orange-100 text-orange-700 hover:bg-orange-200"}`}
                   onClick={() => onTogglePaid(res.id, !res.paid)}
                 >
-                  {res.paid ? "Pendente" : "Pago"}
+                  {res.paid ? t("unpaid") : t("paid")}
                 </button>
               )}
             </li>

@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import CommentsSection from "@/components/CommentsSection";
 
 export default function ReservationDetailPage() {
+    const { t } = require("@/components/LanguageContext").useLanguage();
   const params = useParams<{ id: string }>();
   const reservationId = params?.id;
   const [reservation, setReservation] = useState<any>(null);
@@ -55,10 +56,10 @@ export default function ReservationDetailPage() {
     }
   }
 
-  if (loading) return <div className="p-8">Carregando...</div>;
+  if (loading) return <div className="p-8">{t("loading")}</div>;
   if (error || !reservation) return (
     <main className="p-8 max-w-lg mx-auto">
-      <h1 className="text-2xl font-bold mb-4 text-black">Reserva não encontrada</h1>
+      <h1 className="text-2xl font-bold mb-4 text-black">{t("reservationNotFound")}</h1>
       {error && <div className="text-red-600">{error}</div>}
     </main>
   );
@@ -67,19 +68,19 @@ export default function ReservationDetailPage() {
 
   return (
     <main className="p-8 max-w-lg mx-auto">
-      <h1 className="text-2xl font-bold mb-4 text-black">Detalhes da Reserva</h1>
+      <h1 className="text-2xl font-bold mb-4 text-black">{t("reservationDetails")}</h1>
       <div className="bg-white rounded shadow p-6 mb-4">
-        <div className="mb-2 text-black"><b>Quarto:</b> {reservation.room?.name}</div>
-        <div className="mb-2 text-black"><b>Hóspede:</b> {reservation.guestName}</div>
-        <div className="mb-2 text-black"><b>Valor Pago:</b> € {reservation.valorPago?.toFixed(2) ?? '-'}</div>
-        <div className="mb-2 text-black"><b>Data Entrada:</b> {new Date(reservation.startDate).toLocaleString()}</div>
-        <div className="mb-2 text-black"><b>Data Saída:</b> {new Date(reservation.endDate).toLocaleString()}</div>
-        <div className="mb-2 text-black"><b>Fonte:</b> {reservation.source}</div>
-        <div className="mb-2 text-black"><b>Responsável:</b> {reservation.user?.name ?? '-'}</div>
+        <div className="mb-2 text-black"><b>{t("roomLabel")}:</b> {reservation.room?.name}</div>
+        <div className="mb-2 text-black"><b>{t("guestLabel")}:</b> {reservation.guestName}</div>
+        <div className="mb-2 text-black"><b>{t("paidValueLabel")}:</b> € {reservation.valorPago?.toFixed(2) ?? '-'} </div>
+        <div className="mb-2 text-black"><b>{t("checkinLabel")}:</b> {new Date(reservation.startDate).toLocaleString()}</div>
+        <div className="mb-2 text-black"><b>{t("checkoutLabel")}:</b> {new Date(reservation.endDate).toLocaleString()}</div>
+        <div className="mb-2 text-black"><b>{t("sourceLabel")}:</b> {reservation.source}</div>
+        <div className="mb-2 text-black"><b>{t("responsibleLabel")}:</b> {reservation.user?.name ?? '-'} </div>
         <div className="mb-2 flex items-center gap-2">
-          <b>Status de Pagamento:</b>
+          <b>{t("paymentStatusLabel")}:</b>
           <span className={reservation.paid ? "text-green-600 font-bold" : "text-red-600 font-bold"}>
-            {reservation.paid ? "Pago" : "Pendente"}
+            {reservation.paid ? t("paid") : t("unpaid")}
           </span>
           {canMarkPaid && (
             <button
@@ -87,14 +88,14 @@ export default function ReservationDetailPage() {
               onClick={handleTogglePaid}
               disabled={toggleLoading}
             >
-              {toggleLoading ? "Atualizando..." : reservation.paid ? "Marcar como Pendente" : "Marcar como Pago"}
+              {toggleLoading ? t("updating") : reservation.paid ? t("markUnpaid") : t("markPaid")}
             </button>
           )}
         </div>
         {toggleError && <div className="text-red-600 mt-2">{toggleError}</div>}
       </div>
       <div className="bg-white rounded shadow p-6">
-        <h2 className="font-semibold mb-2 text-black">Comentários da Reserva</h2>
+        <h2 className="font-semibold mb-2 text-black">{t("reservationComments")}</h2>
         <CommentsSection reservationId={reservation.id} comments={reservation.comments} />
       </div>
     </main>
